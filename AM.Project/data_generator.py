@@ -1,4 +1,5 @@
 import numpy as np
+import task_info as TI
 
 
 
@@ -18,3 +19,8 @@ def generate_logical(rows_count, function, filename="logical.csv"):
         for row in random_logical:
             row.append(function(*row))
             file.write(DELIMETER.join(map(str, row)) + "\n")
+
+
+
+if __name__ == "__main__":
+    generate_logical(100, TI.second_function)

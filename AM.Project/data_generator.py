@@ -28,13 +28,13 @@ def generate_regression(rows_count, function, min=-10, max=10, filename="regress
             file.write(DELIMETER.join(map(str, row)) + "\n")
 
 
-def read_csv(filename):
+def read_csv(filename, data_type):
     results = []
     with open(filename, "r") as file:
         file.readline()
         for line in file.readlines():
             row = line.rstrip().split(DELIMETER)
-            results.append(row)
+            results.append(list(map(data_type, row)))
     return results
 
 

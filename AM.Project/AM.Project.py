@@ -10,17 +10,8 @@ def MSE(actual, expected):
 
 
 if __name__ == "__main__":
-    logic_raw_data = DG.read_csv("logical.csv")
-    logic_data = []
-    for row in logic_raw_data:
-        logic_data.append(list(map(int, row)))
-    logic_data = np.array(logic_data)
-
-    regr_raw_data = DG.read_csv("regression.csv")
-    regr_data = []
-    for row in regr_raw_data:
-        regr_data.append(list(map(float, row)))
-    regr_data = np.array(regr_data)
+    logic_data = np.array(DG.read_csv("logical.csv", int), np.int32)
+    regr_raw_data = np.array(DG.read_csv("regression.csv", float), np.float)
 
 
     network = NeuralNetwork(3, 2, 1)

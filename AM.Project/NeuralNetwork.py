@@ -16,3 +16,13 @@ class NeuralNetwork:
         self.learning_rate = np.array(learning_rate)
         self.weights_input_hidden = np.random.randn(neurons_count, input_count)
         self.weights_hidden_output = np.random.randn(1, neurons_count)
+
+
+    def predict(self, input):
+        hidden_in = np.dot(self.weights_input_hidden, input)
+        hidden_out = np.array(list(map(sigmoid, hidden_in)))
+
+        output_in = np.dot(self.weights_hidden_output, hidden_out)
+        output_out = np.array(list(map(sigmoid, output_in)))
+
+        return output_out

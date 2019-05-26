@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 from NeuralNetwork import NeuralNetwork
 import data_generator as DG
@@ -11,6 +12,7 @@ def MSE(actual, expected):
 
 
 def train_network(network, data, epochs):
+    mse_losses = []
     for epoch in range(epochs):
         mse_sum = 0
         for row in logic_data:
@@ -18,9 +20,13 @@ def train_network(network, data, epochs):
             network.train(X, y)
             mse_sum += MSE(network.predict(X), y)
         
-        mse_loss = mse_sum / len(row)
-        print(f"Epoch {epoch + 1}/{epochs}: MSE = {mse_loss}", end="\r")
+        mse_losses.append(mse_sum / len(row))
+        print(f"Epoch {epoch + 1}/{epochs}: MSE = {mse_losses[-1]}", end="\r")
     print()
+    
+    plt.plot(range(epochs), mse_losses)
+    plt.xlabel("Epochs")
+    plt.ylabel("Mean Squared Error")
 
 
 def test_net_on_logic_func(net, func, parameters_count):
@@ -54,3 +60,6 @@ if __name__ == "__main__":
     train_network(network, logic_data, epochs)
     print("Results:")
     test_net_on_logic_func(network, TI.second_function, 3)
+
+
+    plt.show()

@@ -21,5 +21,14 @@ if __name__ == "__main__":
 
 
     network = NeuralNetwork(inputs_count, neurons_count, learning_rate)
-    result = network.predict([0,1,1])
-    train = network.train(np.array([0,1,1]), 1)
+    
+    for epoch in range(epochs):
+        mse_sum = 0
+
+        for row in logic_data:
+            X, y = row[:-1], row[-1]
+            network.train(X, y)
+            mse_sum += MSE(network.predict(X), y)
+        
+        mse_loss = mse_sum / len(row)
+        print(f"Epoch {epoch + 1}/{epochs}: MSE = {mse_loss}", end="\r")

@@ -17,6 +17,17 @@ def generate_logical(rows_count, function, filename="logical.csv"):
             file.write(DELIMETER.join(map(str, row)) + "\n")
 
 
+def generate_regression(rows_count, function, min=-10, max=10, filename="regression.csv"):
+    x_random = np.random.rand(rows_count);
+    x_in_interval = map(lambda x: (max - min) * x + min, x_random)
+
+    with open(filename, "w") as file:
+        file.write(DELIMETER.join(["x", "y"]) + "\n")
+        for x in x_in_interval:
+            row = (x, function(x))
+            file.write(DELIMETER.join(map(str, row)) + "\n")
+
 
 if __name__ == "__main__":
+    generate_regression(100, TI.first_function)
     generate_logical(100, TI.second_function)

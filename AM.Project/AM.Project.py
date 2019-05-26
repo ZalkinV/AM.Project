@@ -49,8 +49,8 @@ if __name__ == "__main__":
     logic_layers = [3, 2, 1]
     learning_rate = 1
 
-    logic_data = np.array(DG.read_csv("logical.csv", int), np.int32)
-    regr_raw_data = np.array(DG.read_csv("regression.csv", float), np.float)
+    logic_data = DG.read_csv("logical.csv", int)
+    regr_raw_data = DG.read_csv("regression.csv", float)
 
 
     network = NeuralNetwork(logic_layers, learning_rate)

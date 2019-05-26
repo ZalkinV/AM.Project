@@ -24,30 +24,32 @@ class NeuralNetwork:
             self.weights.append(current_layer_weights)
 
 
-    def predict(self, input):
-        last_layer = input
+    def get_layers(self, input):
+        layers = [input]
         for layer_weights in self.weights:
             current_layer = []
             for neuron_weights in layer_weights:
-                neuron_value = self.activation(np.sum(neuron_weights * last_layer))
+                neuron_value = self.activation(np.sum(neuron_weights * layers[-1]))
                 current_layer.append(neuron_value)
-            last_layer = current_layer
+            layers.append(current_layer)
 
-        return last_layer
+        return layers
+
+    
+    def predict(self, input):
+        layers_values = self.get_layers(input)
+        return layers_values[-1]
 
 
     def train(self, input, expected_output):
-        hidden_in = np.dot(self.weights[0], input)
-        hidden_out = self.activation(hidden_in)
+        layers = self.get_layers(input)
+        layers = [np.array(layer) for layer in layers]
+        
 
-        output_in = np.dot(self.weights[1], hidden_out)
-        output_out = self.activation(output_in)
-
-
-        error_output = output_out - expected_output
-        weights_hidden_output_delta = error_output * self.gradient(output_out)
-        self.weights[1] -= np.dot(weights_hidden_output_delta, hidden_out.reshape(1, len(hidden_out))) * self.learning_rate
+        error_output = layers[-1] - expected_output
+        weights_hidden_output_delta = error_output * self.gradient(layers[2])
+        self.weights[1] -= np.dot(weights_hidden_output_delta, layers[1].reshape(1, len(layers[1]))) * self.learning_rate
         
         error_hidden = self.weights[1] * weights_hidden_output_delta
-        weights_input_hidden_delta = error_hidden * self.gradient(hidden_out)
-        self.weights[0] -= np.dot(input.reshape(len(input), 1), weights_input_hidden_delta).T * self.learning_rate
+        weights_input_hidden_delta = error_hidden * self.gradient(layers[1])
+        self.weights[0] -= np.dot(input.reshape(len(layers[0]), 1), weights_input_hidden_delta).T * self.learning_rate

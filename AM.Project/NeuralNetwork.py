@@ -15,7 +15,7 @@ class NeuralNetwork:
     def __init__(self, layers, learning_rate):
         np.random.seed(0)
         self.learning_rate = np.array(learning_rate)
-        self.activation = np.vectorize(sigmoid)
+        self.activation = sigmoid
         self.gradient = np.vectorize(lambda x_sigmoided: x_sigmoided * (1 - x_sigmoided))
 
         self.weights = []
@@ -25,13 +25,15 @@ class NeuralNetwork:
 
 
     def predict(self, input):
-        hidden_in = np.dot(self.weights[0], input)
-        hidden_out = self.activation(hidden_in)
+        last_layer = input
+        for layer_weights in self.weights:
+            current_layer = []
+            for neuron_weights in layer_weights:
+                neuron_value = self.activation(np.sum(neuron_weights * last_layer))
+                current_layer.append(neuron_value)
+            last_layer = current_layer
 
-        output_in = np.dot(self.weights[1], hidden_out)
-        output_out = self.activation(output_in)
-
-        return output_out
+        return last_layer
 
 
     def train(self, input, expected_output):

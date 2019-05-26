@@ -2,11 +2,27 @@ import numpy as np
 
 from NeuralNetwork import NeuralNetwork
 import data_generator as DG
+import task_info as TI
 
 
 
 def MSE(actual, expected):
     return np.mean((actual - expected)**2)
+
+
+def test_net_on_logic_func(net, func, parameters_count):
+    max_value = 2**parameters_count - 1
+    for value in range(max_value):
+        X = []
+        for i in range(parameters_count):
+            X.append(value % 2)
+            value = value >> 1
+
+        actual = round(net.predict(X)[0], 2)
+        expected = func(*X)
+
+        print(f"{X}: {actual}/{expected}")
+
 
 
 if __name__ == "__main__":
@@ -32,3 +48,6 @@ if __name__ == "__main__":
         
         mse_loss = mse_sum / len(row)
         print(f"Epoch {epoch + 1}/{epochs}: MSE = {mse_loss}", end="\r")
+    print()
+
+    test_net_on_logic_func(network, TI.second_function, 3)

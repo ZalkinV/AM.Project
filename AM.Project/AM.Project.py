@@ -46,16 +46,14 @@ def test_net_on_logic_func(net, func, parameters_count):
 
 if __name__ == "__main__":
     epochs = 10
-
-    inputs_count = 3
-    neurons_count = 2
+    logic_layers = [3, 2, 1]
     learning_rate = 1
 
     logic_data = np.array(DG.read_csv("logical.csv", int), np.int32)
     regr_raw_data = np.array(DG.read_csv("regression.csv", float), np.float)
 
 
-    network = NeuralNetwork(inputs_count, neurons_count, learning_rate)
+    network = NeuralNetwork(logic_layers, learning_rate)
    
     train_network(network, logic_data, epochs)
     print("Results:")

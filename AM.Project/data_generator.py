@@ -28,6 +28,17 @@ def generate_regression(rows_count, function, min=-10, max=10, filename="regress
             file.write(DELIMETER.join(map(str, row)) + "\n")
 
 
+def read_csv(filename):
+    results = []
+    with open(filename, "r") as file:
+        file.readline()
+        for line in file.readlines():
+            row = line.rstrip().split(DELIMETER)
+            results.append(row)
+    return results
+
+
+
 if __name__ == "__main__":
     generate_regression(100, TI.first_function)
     generate_logical(100, TI.second_function)

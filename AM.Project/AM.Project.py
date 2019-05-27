@@ -27,7 +27,7 @@ def train_network(network, data, epochs):
     plt.plot(range(epochs), mse_losses)
     plt.xlabel("Epochs")
     plt.ylabel("Mean Squared Error")
-    plt.show()
+    
 
 
 def test_net_on_logic_func(net, func, parameters_count):
@@ -55,9 +55,9 @@ def network_work(epochs, layers, data, learning_rate, func, parameters_count):
 
 
 if __name__ == "__main__":
-    epochs = 50
+    epochs = 100
     logic_layers = [3, 2, 1]
-    logic_layers_2 = [2, 1, 1]
+    logic_layers_2 = [2, 2, 1]
     learning_rate = 1
 
     logic_data = np.array(DG.read_csv("logical.csv", int), np.int32)
@@ -66,4 +66,5 @@ if __name__ == "__main__":
 
     network_work(epochs, logic_layers, logic_data, learning_rate, TI.second_function, 3)
     network_work(epochs, logic_layers_2, logic_data_2, learning_rate, TI.third_function, 2)
-
+    plt.legend(["first", "second"])
+    plt.show()

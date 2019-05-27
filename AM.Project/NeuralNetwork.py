@@ -13,6 +13,7 @@ def sigmoid_derivative(x):
 
 class NeuralNetwork:
     def __init__(self, layers, learning_rate):
+        np.random.seed(2204)
         self.learning_rate = np.array(learning_rate)
         self.activation = sigmoid
         self.gradient = np.vectorize(lambda x_sigmoided: x_sigmoided * (1 - x_sigmoided))

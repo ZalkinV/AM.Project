@@ -7,8 +7,8 @@ DELIMETER = ","
 
 
 
-def generate_logical(rows_count, function, filename="logical.csv"):
-    random_logical = np.random.randint(0, 2, (rows_count, 3))
+def generate_logical(variables_count, rows_count, function, filename="logical.csv"):
+    random_logical = np.random.randint(0, 2, (rows_count, variables_count))
     
     with open(filename, "w") as file:
         file.write(DELIMETER.join(["x", "y", "z", "result"]) + "\n")
@@ -41,4 +41,5 @@ def read_csv(filename, data_type):
 
 if __name__ == "__main__":
     generate_regression(100, TI.first_function)
-    generate_logical(100, TI.second_function)
+    generate_logical(3, 100, TI.second_function)
+    generate_logical(2, 100, TI.third_function, "logical_2.csv")

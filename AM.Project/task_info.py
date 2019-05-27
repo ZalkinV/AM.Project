@@ -13,3 +13,6 @@ def second_function(x, y, z):
     # x and y or !y or z
     # x or !y or z
     return int(x or not y or z)
+
+def third_function(x, y):
+    return int(x or not x or y)

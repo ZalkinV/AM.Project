@@ -15,7 +15,7 @@ def train_network(network, data, epochs):
     mse_losses = []
     for epoch in range(epochs):
         mse_sum = 0
-        for row in logic_data:
+        for row in data:
             X, y = row[:-1], row[-1]
             network.train(X, y)
             mse_sum += MSE(network.predict(X), y)
@@ -30,7 +30,7 @@ def train_network(network, data, epochs):
 
 
 def test_net_on_logic_func(net, func, parameters_count):
-    max_value = 2**parameters_count - 1
+    max_value = 2**parameters_count
     for value in range(max_value):
         X = []
         for i in range(parameters_count):
@@ -47,9 +47,11 @@ def test_net_on_logic_func(net, func, parameters_count):
 if __name__ == "__main__":
     epochs = 10
     logic_layers = [3, 2, 1]
+    logic_layers_2 = [2, 1, 1]
     learning_rate = 1
 
     logic_data = np.array(DG.read_csv("logical.csv", int), np.int32)
+    logic_data_2 = np.array(DG.read_csv("logical_2.csv", int), np.int32)
     regr_raw_data = np.array(DG.read_csv("regression.csv", float), np.float)
 
 
@@ -58,6 +60,13 @@ if __name__ == "__main__":
     train_network(network, logic_data, epochs)
     print("Results:")
     test_net_on_logic_func(network, TI.second_function, 3)
+
+
+    print()
+    network_2 = NeuralNetwork(logic_layers_2, learning_rate)
+    train_network(network_2, logic_data_2, epochs)
+    print("Results:")
+    test_net_on_logic_func(network_2, TI.third_function, 2)
 
 
     plt.show()

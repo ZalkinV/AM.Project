@@ -24,9 +24,10 @@ def train_network(network, data, epochs):
         print(f"Epoch {epoch + 1}/{epochs}: MSE = {mse_losses[-1]}", end="\r")
     print()
     
-    plt.plot(range(epochs), mse_losses)
+    plt.plot(range(1, epochs + 1), mse_losses)
     plt.xlabel("Epochs")
     plt.ylabel("Mean Squared Error")
+    return mse_losses[-1]
     
 
 
@@ -48,10 +49,12 @@ def test_net_on_logic_func(net, func, parameters_count):
 def network_work(epochs, layers, data, learning_rate, func, parameters_count):
     network = NeuralNetwork(layers, learning_rate)
    
-    train_network(network, data, epochs)
+    mse_loss = train_network(network, data, epochs)
     print("Results:")
     test_net_on_logic_func(network, func, parameters_count)
     print()
+    
+    return mse_loss
 
 
 if __name__ == "__main__":

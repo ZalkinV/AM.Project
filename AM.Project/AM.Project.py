@@ -66,5 +66,20 @@ if __name__ == "__main__":
 
     network_work(epochs, logic_layers, logic_data, learning_rate, TI.second_function, 3)
     network_work(epochs, logic_layers_2, logic_data_2, learning_rate, TI.third_function, 2)
-    plt.legend(["first", "second"])
+    plt.legend(["First function", "Second functon"])
     plt.show()
+
+
+    print("Neurons count test for first function:")
+    epochs = 50
+    for i in range(1, 20):
+        logic_layers[1] = i
+        print(f"Hidden layer neurons count = {i}")
+        network_work(epochs, logic_layers, logic_data, learning_rate, TI.second_function, 3)
+
+
+    print("\nNeurons count test for second function:")
+    for i in range(1, 20):
+        logic_layers[1] = i
+        print(f"Hidden layer neurons count = {i}")
+        network_work(epochs, logic_layers, logic_data, learning_rate, TI.second_function, 3)
